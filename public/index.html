@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <script src="main.js"></script>
     <script type="text/javascript" src="randomMath.js"></script>
     <script type="text/javascript" src="lib/index.js"></script>
     <script type="text/javascript" src="services/TextToSpeech.js"></script>
     <script type="text/javascript" src="services/SpeechToText.js"></script>
+    <script type="text/javascript" src="services/BrawlstarSound.js"></script>
     <title>beachgirlzzz</title>
     <script type="text/javascript">
       const chooseLanguage = async () => {
@@ -16,7 +18,7 @@
         try {
           const fakeQ = 'Nederlands'
           const lang = await textToSpeech.getLanguage(fakeQ)
-          if(lang.length > 1) {
+          if (lang.length > 1) {
             await textToSpeech.speak('Multiple languages found, please choose the preferred one')
             lang.forEach((l) => textToSpeech.speak(l))
           } else {
@@ -31,9 +33,11 @@
         await textToSpeech.speak('Wat is jouw naam?')
         const name = await speechToText.getSpeech()
         await textToSpeech.speak(`Is je naam inderdaad ${ name }`)
-        const res = await speechToText.getSpeech()
-        if (res.toLowerCase() === 'ja') {
+        const confirmation = await speechToText.getSpeech()
+        if (confirmation.toLowerCase() === 'ja') {
           document.querySelector('beach-name').shadowRoot.querySelector('#name').value = name
+        } else {
+          getName()
         }
       }
 
@@ -41,10 +45,16 @@
         await textToSpeech.speak('Welke sommen wil je doen?')
         const math = await speechToText.getSpeech()
         await textToSpeech.speak(`Weet je zeker dat je ${ math } wilt oefenen?`)
-        const res = await speechToText.getSpeech()
-        if (res.toLowerCase() === 'ja') {
+        const confirmation = await speechToText.getSpeech()
+        if (confirmation.toLowerCase() === 'ja') {
+          if (!['plus', 'min', 'keer', 'delen'].includes(math)) {
+            await textToSpeech.speak(`Helaas kunnen we ${ math } niet matchen aan een geldige waarde. Probeer het asjeblieft opnieuw`)
+            chooseMath()
+          }
           window.operator = math.toLowerCase()
           document.querySelector('beach-choose_math').shadowRoot.querySelector(`#${ math }`).checked = true
+        } else {
+          chooseMath()
         }
       }
 
@@ -75,22 +85,28 @@
           document.querySelector('beach-math').shadowRoot.querySelector('#givenAnswer').value = answer
 
           const correctAnswer = computeSum(window.operator)(parseInt(n1), parseInt(n2))
-          if(correctAnswer === parseInt(answer)) {
+          if (correctAnswer === parseInt(answer)) {
             await textToSpeech.speak('Goedzo! Dat is het goede antwoord!')
           } else {
             await textToSpeech.speak('Helaas, je antwoord klopt niet.')
             await textToSpeech.speak(`De som ${ n1 } ${ window.operator } ${ n2 } is ${ correctAnswer }`)
           }
+        } else {
+          answerSum()
         }
       }
     </script>
     <title>Beachgirlzzz rekenoefeningen</title>
 </head>
 <body>
+  <header>
     <h1>Beach girlzzz presenteert rekenen met woorden</h1>
+  </header>
+  <main>
     <beach-name></beach-name>
     <beach-choose_math></beach-choose_math>
     <beach-success_screen></beach-success_screen>
     <beach-math></beach-math>
+  </main>
 </body>
 </html>
