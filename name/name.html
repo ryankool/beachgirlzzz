@@ -1,0 +1,31 @@
+<h1 id="PlayerName">Jouw naam</h1>
+
+
+<button onclick="window.dispatchEvent(new CustomEvent('previousStep'))">Previous</button>
+<button onclick="window.dispatchEvent(new CustomEvent('nextStep', {detail: 'choose_math'}))">Next</button>
+
+<script>
+
+ let msg = ''; /// transcript of the speech
+
+window.SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+
+let recognition = new window.SpeechRecognition();
+
+recognition.start();
+
+
+recognition.addEventListener('result', onSpeak);
+
+recognition.addEventListener('end', () => recognition.start());
+
+function onSpeak(e) {
+  let msg = e.results[0][0].transcript;
+  const showTheName = document.getElementById('PlayerName');
+  console.log(msg);
+  return showTheName.innerHTML = msg;
+}
+
+</script>
+
