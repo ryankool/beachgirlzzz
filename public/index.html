@@ -70,7 +70,7 @@
         const answer = await speechToText.getSpeech()
         await textToSpeech.speak(`Weet je zeker dat je ${ answer } in wilt vullen?`)
         const confirmation = await speechToText.getSpeech()
-        console.log('confirmation', confirmation)
+
         if (confirmation.toLowerCase() === 'ja') {
           document.querySelector('beach-math').shadowRoot.querySelector('#givenAnswer').value = answer
 
