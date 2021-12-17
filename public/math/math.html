@@ -1,4 +1,14 @@
-<h1>Math</h1>
+<h2>De som</h2>
+
+<form id="calculationsForm">
+  <p class="field1"></p>
+  <p class="operator"></p>
+  <p class="field2"></p>
+  <p class="answer"></p>
+  <label for="givenAnswer">Geef het antwoord</label>
+  <input type="number" id="givenAnswer" class="givenAnswer" onfocus="answerSum()">
+  <p class="confirmBtn">Bevestigen</p>
+</form>
 
 <button onclick="window.dispatchEvent(new CustomEvent('previousStep', {detail: 'choose_math'}))">Previous</button>
 <button onclick="window.dispatchEvent(new CustomEvent('nextStep', {detail: 'success_screen'}))">Next</button>

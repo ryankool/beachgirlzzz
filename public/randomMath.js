@@ -1,11 +1,12 @@
 // get html elements to display math
-const fieldForNr1 = document.querySelector('.field1');
-const fieldForNr2 = document.querySelector('.field2');
-const fieldForOperator = document.querySelector('.operator');
-const fieldForAnswer = document.querySelector('.answer');
-let givenAnswer = document.querySelector('.givenAnswer');
+// const fieldForNr1 = document.querySelector('.field1');
+const fieldForNr1 = document.querySelector('beach-math').shadowRoot.querySelector('.field1');
+const fieldForNr2 = document.querySelector('beach-math').shadowRoot.querySelector('.field2');
+const fieldForOperator = document.querySelector('beach-math').shadowRoot.querySelector('.operator');
+const fieldForAnswer = document.querySelector('beach-math').shadowRoot.querySelector('.answer');
+let givenAnswer = document.querySelector('beach-math').shadowRoot.querySelector('.givenAnswer');
 
-const confirmAnswerBtn = document.querySelector('.confirmBtn');
+const confirmAnswerBtn = document.querySelector('beach-math').shadowRoot.querySelector('.confirmBtn');
 
 function createRandomSum(chosenTable, chosenOperator){
     let randomNr1 = Math.round(Math.random() * chosenTable);

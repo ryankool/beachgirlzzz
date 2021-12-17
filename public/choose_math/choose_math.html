@@ -1,6 +1,6 @@
 <h2>Kies je sommen</h2>
 
-<form onsubmit="submitFunc(event)">
+<form>
   <fieldset>
     <legend>Wat wil je doen</legend>
 
@@ -19,4 +19,6 @@
   <button type="button" onclick="window.dispatchEvent(new CustomEvent('previousStep', {detail: 'name'}))">Previous</button>
   <button type="submit" onclick="window.dispatchEvent(new CustomEvent('nextStep', {detail: 'math'}))">Next</button>
 </form>
+
+
 
