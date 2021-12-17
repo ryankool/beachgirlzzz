@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="main.js"></script>
+    <script type="text/javascript" src="lib/index.js"></script>
+    <script type="text/javascript" src="services/TextToSpeech.js"></script>
+    <script type="text/javascript" src="services/SpeechToText.js"></script>
+    <title>beachgirlzzz</title>
+    <script type="text/javascript">
+      const chooseLanguage = async () => {
+        await textToSpeech.speak('Choose language')
+        try {
+          const fakeQ = 'Nederlands'
+          const lang = await textToSpeech.getLanguage(fakeQ)
+          if(lang.length > 1) {
+            await textToSpeech.speak('Multiple languages found, please choose the preferred one')
+            lang.forEach((l) => textToSpeech.speak(l))
+          } else {
+            await textToSpeech.speak(`Selected language ${ fakeQ }`)
+          }
+        } catch(e) {
+          textToSpeech.speak(e.toString())
+        }
+      }
+
+      const getName = async () => {
+        await textToSpeech.speak('Wat is jouw naam?')
+        const name = await speechToText.getSpeech()
+        await textToSpeech.speak(`Is je naam inderdaad ${ name }`)
+        const res = await speechToText.getSpeech()
+        if (res === 'ja') {
+          document.querySelector('beach-name').shadowRoot.querySelector('#name').value = name
+        }
+      }
+
+      const chooseMath = async () => {
+        await textToSpeech.speak('Welke sommen wil je doen?')
+        const math = await speechToText.getSpeech()
+        await textToSpeech.speak(`Weet je zeker dat je ${ math } wilt oefenen?`)
+        const res = await speechToText.getSpeech()
+        if (res === 'ja') {
+          document.querySelector('beach-choose_math').shadowRoot.querySelector(`#${ math }`).checked = true
+        }
+      }
+    </script>
+    <title>beachgirlzzz</title>
+</head>
+<body>
+    <h1>beach girlzzz</h1>
+    <beach-name></beach-name>
+    <beach-choose_math></beach-choose_math>
+    <beach-success_screen></beach-success_screen>
+    <beach-math></beach-math>
+</body>
+</html>
