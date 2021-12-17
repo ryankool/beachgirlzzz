@@ -7,6 +7,7 @@
     <script src="main.js"></script>
     <script type="text/javascript" src="lib/index.js"></script>
     <script type="text/javascript" src="services/TextToSpeech.js"></script>
+    <script type="text/javascript" src="services/SpeechToText.js"></script>
     <title>beachgirlzzz</title>
     <script type="text/javascript">
       const chooseLanguage = async () => {
@@ -22,6 +23,16 @@
           }
         } catch(e) {
           textToSpeech.speak(e.toString())
+        }
+      }
+
+      const getName = async () => {
+        await textToSpeech.speak('Wat is jouw naam?')
+        const name = await speechToText.getSpeech()
+        await textToSpeech.speak(`Is je naam inderdaad ${ name }`)
+        const res = await speechToText.getSpeech()
+        if (res === 'ja') {
+          document.querySelector('beach-name').shadowRoot.querySelector('#name').value = name
         }
       }
     </script>

@@ -19,6 +19,7 @@ class TextToSpeech {
   
   speak = (str) => new Promise((resolve) => {
     const res = new SpeechSynthesisUtterance(str);
+    res.lang = 'nl'
     speechSynthesis.speak(res)
     res.onend = resolve
   })
