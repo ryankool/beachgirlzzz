@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ryankool/beachgirlzzz/issues"
   },
-  "homepage": "https://github.com/ryankool/beachgirlzzz#readme"
+  "homepage": "https://github.com/ryankool/beachgirlzzz#readme",
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "^2.6.0"
+  }
 }
