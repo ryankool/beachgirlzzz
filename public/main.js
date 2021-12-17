@@ -137,6 +137,32 @@ function showHideSteps() {
 
 window.addEventListener('load', function () {
     showHideSteps();
+    var sheet = new CSSStyleSheet
+    sheet.replaceSync( `
+
+    .input-container { 
+        text-align: left;
+    }
+
+    .input-container > * {
+        margin-top: 1rem;
+    }
+
+    .input-container > input {
+        padding: 0.5em;
+    }
+
+    .input-container > button {
+        padding: 0.5em;
+        background-color: #16A085;
+        border: none;
+        font-weight: bold;
+    }
+
+    `)
+    setTimeout(() => {
+        document.querySelector('beach-name').shadowRoot.adoptedStyleSheets = [ sheet ]
+        }, 100)
 })
 
 const submitFunc = (e) => {
