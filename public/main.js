@@ -97,6 +97,9 @@ function nextStep(evt) {
         if(nextStep === 'math'){
           makeSum()
         }
+        if(nextStep === 'success_screen'){
+          brawlstarSound.playSound()
+        }
         showHideSteps();
         console.log(pages)
     } else {
