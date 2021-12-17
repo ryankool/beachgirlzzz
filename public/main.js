@@ -1,3 +1,45 @@
+window.operator = 'plus'
+
+const operators = {
+  'plus': '+',
+  'min': '-',
+  'keer': '*',
+  'delen': '/'
+}
+
+const makeSum = () => {
+  const fieldForNr1 = document.querySelector('beach-math').shadowRoot.querySelector('.field1');
+  const fieldForNr2 = document.querySelector('beach-math').shadowRoot.querySelector('.field2');
+  const fieldForOperator = document.querySelector('beach-math').shadowRoot.querySelector('.operator');
+  const fieldForAnswer = document.querySelector('beach-math').shadowRoot.querySelector('.answer');
+  let givenAnswer = document.querySelector('beach-math').shadowRoot.querySelector('.givenAnswer');
+
+  const confirmAnswerBtn = document.querySelector('beach-math').shadowRoot.querySelector('.confirmBtn');
+
+  function createRandomSum(chosenTable, chosenOperator){
+      let randomNr1 = Math.round(Math.random() * chosenTable);
+      let randomNr2 = Math.round(Math.random() * chosenTable);
+      let answer = eval(`${randomNr1} ${chosenOperator} ${randomNr2}`);
+      // display
+      fieldForNr1.textContent = randomNr1;
+      fieldForNr2.textContent = randomNr2;
+      fieldForOperator.textContent = chosenOperator;
+      return answer;
+  }
+
+  confirmAnswerBtn.addEventListener('click', function() {
+      if(givenAnswer.value == answerToSum){
+          fieldForAnswer.textContent = 'thats correct!';
+      }
+      else {
+          fieldForAnswer.textContent = 'not yet, please try again';
+      }
+  })
+
+  console.log('OPERATOR', operators[window.operator])
+  let answerToSum = createRandomSum(8, operators[window.operator]);
+}
+
 const pages = {
     name: {
         isVisible: true
@@ -52,6 +94,9 @@ function nextStep(evt) {
     if(nextStep){
         disableAllSteps();
         pages[nextStep].isVisible = true;
+        if(nextStep === 'math'){
+          makeSum()
+        }
         showHideSteps();
         console.log(pages)
     } else {
@@ -93,29 +138,33 @@ function showHideSteps() {
 window.addEventListener('load', function () {
     showHideSteps();
     var sheet = new CSSStyleSheet
-sheet.replaceSync( `
+    sheet.replaceSync( `
 
-.input-container { 
-    text-align: left;
-}
+    .input-container { 
+        text-align: left;
+    }
 
-.input-container > * {
-    margin-top: 1rem;
-}
+    .input-container > * {
+        margin-top: 1rem;
+    }
 
-.input-container > input {
-    padding: 0.5em;
-}
+    .input-container > input {
+        padding: 0.5em;
+    }
 
-.input-container > button {
-    padding: 0.5em;
-    background-color: #16A085;
-    border: none;
-    font-weight: bold;
-}
+    .input-container > button {
+        padding: 0.5em;
+        background-color: #16A085;
+        border: none;
+        font-weight: bold;
+    }
 
-`)
-setTimeout(() => {
-    document.querySelector('beach-name').shadowRoot.adoptedStyleSheets = [ sheet ]
-    }, 100)
+    `)
+    setTimeout(() => {
+        document.querySelector('beach-name').shadowRoot.adoptedStyleSheets = [ sheet ]
+        }, 100)
 })
+
+const submitFunc = (e) => {
+    e.preventDefault();
+}

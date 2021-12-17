@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="main.js"></script>
+    <script type="text/javascript" src="randomMath.js"></script>
     <script type="text/javascript" src="lib/index.js"></script>
     <script type="text/javascript" src="services/TextToSpeech.js"></script>
     <script type="text/javascript" src="services/SpeechToText.js"></script>
@@ -32,7 +33,7 @@
         const name = await speechToText.getSpeech()
         await textToSpeech.speak(`Is je naam inderdaad ${ name }`)
         const res = await speechToText.getSpeech()
-        if (res === 'ja') {
+        if (res.toLowerCase() === 'ja') {
           document.querySelector('beach-name').shadowRoot.querySelector('#name').value = name
         }
       }
@@ -42,16 +43,53 @@
         const math = await speechToText.getSpeech()
         await textToSpeech.speak(`Weet je zeker dat je ${ math } wilt oefenen?`)
         const res = await speechToText.getSpeech()
-        if (res === 'ja') {
+        if (res.toLowerCase() === 'ja') {
+          window.operator = math.toLowerCase()
           document.querySelector('beach-choose_math').shadowRoot.querySelector(`#${ math }`).checked = true
         }
       }
+
+      const answerSum = async () => {
+        const operators = {
+          plus: (a, b) => a + b,
+          min: (a, b) => a - b,
+          keer: (a, b) => a * b,
+          delen: (a, b) => a / b,
+        }
+
+        const computeSum = (operator) => (a, b) => operators[operator](a, b)
+  
+        const n1 = document.querySelector('beach-math').shadowRoot.querySelector('.field1').textContent
+        const n2 = document.querySelector('beach-math').shadowRoot.querySelector('.field2').textContent
+
+        await textToSpeech.speak('Goed dat je deze som wilt oefenen. Ik herhaal de stappen van de som na elkaar')
+        await textToSpeech.speak(n1)
+        await textToSpeech.speak(window.operator)
+        await textToSpeech.speak(n2)
+        await textToSpeech.speak('Wat is het goede antwoord?')
+
+        const answer = await speechToText.getSpeech()
+        await textToSpeech.speak(`Weet je zeker dat je ${ answer } in wilt vullen?`)
+        const confirmation = await speechToText.getSpeech()
+
+        if (confirmation.toLowerCase() === 'ja') {
+          document.querySelector('beach-math').shadowRoot.querySelector('#givenAnswer').value = answer
+
+          const correctAnswer = computeSum(window.operator)(parseInt(n1), parseInt(n2))
+          if(correctAnswer === parseInt(answer)) {
+            await textToSpeech.speak('Goedzo! Dat is het goede antwoord!')
+          } else {
+            await textToSpeech.speak('Helaas, je antwoord klopt niet.')
+            await textToSpeech.speak(`De som ${ n1 } ${ window.operator } ${ n2 } is ${ correctAnswer }`)
+          }
+        }
+      }
     </script>
-    <title>beachgirlzzz</title>
+    <title>Beachgirlzzz rekenoefeningen</title>
 </head>
 <body>
   <header>
-    <h1>beach girlzzz</h1>
+    <h1>Beach girlzzz presenteert rekenen met woorden</h1>
   </header>
   <main>
     <beach-name></beach-name>
