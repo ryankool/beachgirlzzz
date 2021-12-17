@@ -93,3 +93,7 @@ function showHideSteps() {
 window.addEventListener('load', function () {
     showHideSteps();
 })
+
+const submitFunc = (e) => {
+    e.preventDefault();
+}
