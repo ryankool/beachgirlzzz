@@ -35,14 +35,21 @@
           document.querySelector('beach-name').shadowRoot.querySelector('#name').value = name
         }
       }
+
+      const chooseMath = async () => {
+        await textToSpeech.speak('Welke sommen wil je doen?')
+        const math = await speechToText.getSpeech()
+        await textToSpeech.speak(`Weet je zeker dat je ${ math } wilt oefenen?`)
+        const res = await speechToText.getSpeech()
+        if (res === 'ja') {
+          document.querySelector('beach-choose_math').shadowRoot.querySelector(`#${ math }`).checked = true
+        }
+      }
     </script>
     <title>beachgirlzzz</title>
 </head>
 <body>
     <h1>beach girlzzz</h1>
-    <h2>hello world</h2>
-    <button onclick="chooseLanguage()">Choose language</button>
-    <button onclick="textToSpeech.speak('What is your name')">Name</button>
     <beach-name></beach-name>
     <beach-choose_math></beach-choose_math>
     <beach-success_screen></beach-success_screen>

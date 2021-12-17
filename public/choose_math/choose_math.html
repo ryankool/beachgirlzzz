@@ -1,4 +1,23 @@
-<h1>Choose math</h1>
+<h2>Kies je sommen</h2>
+
+<form>
+  <fieldset>
+    <legend>Wat wil je doen</legend>
+
+    <input type="radio" name="math" id="plus" value="plus" onfocus="chooseMath()" />
+    <label for="plus">Plus</label><br />
+
+    <input type="radio" name="math" id="min" value="min" />
+    <label for="min">Min</label><br />
+
+    <input type="radio" name="math" id="keer" value="keer" />
+    <label for="keer">Keer</label><br />
+
+    <input type="radio" name="math" id="delen" value="delen" />
+    <label for="delen">Delen</label><br />
+  </fieldset>
+</form>
+
 
 <button onclick="window.dispatchEvent(new CustomEvent('previousStep', {detail: 'name'}))">Previous</button>
 <button onclick="window.dispatchEvent(new CustomEvent('nextStep', {detail: 'math'}))">Next</button>
