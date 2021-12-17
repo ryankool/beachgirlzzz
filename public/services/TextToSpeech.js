@@ -1,4 +1,4 @@
-class SpeechToText {
+class TextToSpeech {
 
   constructor() {
     window.speechSynthesis.onvoiceschanged = () => {
@@ -25,4 +25,4 @@ class SpeechToText {
 
 }
 
-const speechToText = new SpeechToText()
+const textToSpeech = new TextToSpeech()
