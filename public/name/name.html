@@ -1,0 +1,7 @@
+<h2>Wat is je naam</h2>
+
+<label for="naam">Naam</label>
+<input type="text" id="name" placeholder="Wat is je naam?" onfocus="getName()" />
+
+<button onclick="window.dispatchEvent(new CustomEvent('previousStep'))">Previous</button>
+<button onclick="window.dispatchEvent(new CustomEvent('nextStep', {detail: 'choose_math'}))">Next</button>
